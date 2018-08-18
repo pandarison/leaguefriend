@@ -9,7 +9,7 @@ League Friend
 * Stats from different sources (OP.GG, Professor.GG etc).
 
 **Download Link:**  
-[Click here to download](https://github.com/pandarison/leaguefriend/blob/master/leaguefriend.zip?raw=true)
+[Click here to download](https://github.com/pandarison/leaguefriend/releases/download/1.0/leaguefriend.zip)
 
 **How to use:**  
 Open the app and turn on Automatic Mode.
