@@ -1,5 +1,6 @@
 League Friend
 =============
+[![Github All Releases](https://img.shields.io/github/downloads/pandarison/leaguefriend/total.svg)](https://github.com/pandarison/leaguefriend)
 
 **Features:**
 
