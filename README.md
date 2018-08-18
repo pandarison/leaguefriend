@@ -15,6 +15,9 @@ League Friend
 **How to use:**  
 Open the app and turn on Automatic Mode.
 
+**[Submit Bug or Suggestions](https://gitreports.com/issue/pandarison/leaguefriend)**
+
+
 **FAQ**
 
 **Q.** "Unidentified developer"?  
