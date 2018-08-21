@@ -1,6 +1,6 @@
 League Friend
 =============
-[![Github All Releases](https://img.shields.io/github/downloads/pandarison/leaguefriend/total.svg)](https://github.com/pandarison/leaguefriend/releases/download/1.0/leaguefriend.zip)
+[![Github All Releases](https://img.shields.io/github/downloads/pandarison/leaguefriend/latest.svg)](https://github.com/pandarison/leaguefriend/releases/download/1.1/LeagueFriend.zip)
 
 **Features:**
 
@@ -10,7 +10,7 @@ League Friend
 * Stats from different sources (OP.GG, Professor.GG etc).
 
 **Download Link:**  
-[Click here to download](https://github.com/pandarison/leaguefriend/releases/download/1.0/leaguefriend.zip)
+[Click here to download](https://github.com/pandarison/leaguefriend/releases/download/1.1/LeagueFriend.zip)
 
 **How to use:**  
 Open the app and turn on Automatic Mode.
