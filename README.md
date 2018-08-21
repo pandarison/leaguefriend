@@ -22,3 +22,6 @@ Open the app and turn on Automatic Mode.
 
 **Q.** "Unidentified developer"?  
 **A.** If you run the app for the first time, you need to right click and select open.
+
+**Q.** Is it a virus?  
+**A.** LeagueFriend is open source. You can check every line of the code. You can also clone this repo and build the app yourself.
