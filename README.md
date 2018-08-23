@@ -1,6 +1,6 @@
 League Friend
 =============
-[![Github All Releases](https://img.shields.io/github/downloads/pandarison/leaguefriend/latest.svg)](https://github.com/pandarison/leaguefriend/releases/download/1.1/LeagueFriend.zip)
+[![Github Releases](https://img.shields.io/github/downloads/pandarison/leaguefriend/latest/total.svg)](https://github.com/pandarison/leaguefriend/releases/download/1.1/LeagueFriend.zip)
 
 **Features:**
 

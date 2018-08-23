@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # @Author: caspar
 # @Date:   2018-08-02 10:22:39
-# @Last Modified by:   caspar
-# @Last Modified time: 2018-08-17 23:25:05
+# @Last Modified by:   Pandarison
+# @Last Modified time: 2018-08-23 16:15:23
 
 import urllib.parse
 import toga
@@ -79,7 +79,7 @@ $("body").attr("style","padding-top:0");"""
 
 def processor_BlitzPostGame(data, region):
     global REGION_CODE
-    url = 'https://app.blitz.gg/lol/match/{}/{}/{}'.format(REGION_CODE[region], data['playerName'], str(data['gameID']))
+    url = 'https://app.blitz.gg/lol/match/{}/{}/{}'.format(REGION_CODE[region], urllib.parse.quote(data['playerName']), str(data['gameID']))
     script = """(function() {
     // Load the script
     var script = document.createElement("SCRIPT");
