@@ -13,6 +13,7 @@ OPTIONS = {
     'iconfile':'resources/app.icns',
     'plist':{
         'LSUIElement':True,
+        'CFBundleIdentifier':'org.LeagueFriend',
         'NSAppTransportSecurity':{
             'NSAllowsArbitraryLoads':True
         }

@@ -1,0 +1,11 @@
+/lol-champ-select/v1/current-champion returns int:champion_id
+
+https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/7200_Domination.png
+
+https://ddragon.leagueoflegends.com/cdn/8.16.1/data/en_US/runesReforged.json
+
+https://blitz.iesdev.com/api/lolstats/champions
+
+https://ddragon.leagueoflegends.com/cdn/8.17.1/data/en_US/championFull.json
+
+<img class="rune" :src="'https://ddragon.leagueoflegends.com/cdn/img/' + " />

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+</head>
+
+<body>
+    <el-container id="app">
+        <el-header>
+            <el-row>
+                <el-col :span="10">
+                    <el-row type="flex" justify="center">
+                        <el-col :span="4" v-for="champion in team1">
+                            <img @click="select1(champion, null)" :class="icon_class(champion, selected1)" :src="'https://ddragon.leagueoflegends.com/cdn/8.16.1/img/champion/' + champion + '.png'" />
+                        </el-col>
+                    </el-row>
+                </el-col>
+                <el-col :span="4">
+                    <img class="vs-icon" src="data:image/png;base64,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">
+                </el-col>
+                <el-col :span="10">
+                    <el-row type="flex" justify="center">
+                        <el-col :span="4" v-for="champion in team2">
+                            <img @click="select2(champion, null)" :class="icon_class(champion, selected2)" :src="'https://ddragon.leagueoflegends.com/cdn/8.16.1/img/champion/' + champion + '.png'" />
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+        </el-header>
+        <el-main>
+            <el-row>
+                <el-col :span="10">
+                    <el-row class="rune-page">
+                        <el-tabs type="border-card" @tab-click='select_role' :value="selected_position">
+                          <el-tab-pane v-for="key in runeData[selected1]" :label="key.role" :name="key.role" style="background-color: #3d4d73;">
+                            <el-row>
+                                <el-col :span="12" v-for="tree in runesReforged" v-if="tree.highlight == 'rune' && tree.secondary==false" style="padding: 10px">
+                                    <el-row type="flex" justify="center">
+                                        <el-col :span="4">
+                                            <div><el-tooltip :content="tree.name"><img :src="'https://ddragon.leagueoflegends.com/cdn/img/' + tree.icon" /> </el-tooltip></div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row type="flex" justify="center" v-for="slot in tree.slots" v-if="slot.show==true">
+                                        <el-col v-for="rune in slot.runes" :span="4">
+                                            <div><el-tooltip open-delay="1000"><div slot="content" v-html="rune.shortDesc"></div><img :class="rune.highlight" :src="'https://ddragon.leagueoflegends.com/cdn/img/' + rune.icon" /></el-tooltip></div>
+                                        </el-col>
+                                    </el-row>
+                                </el-col>
+
+                                <el-col :span="12" v-for="tree in runesReforged" v-if="tree.highlight == 'rune' && tree.secondary==true" style="padding: 10px">
+                                    <el-row type="flex" justify="center">
+                                        <el-col :span="4">
+                                            <div><el-tooltip :content="tree.name"><img :src="'https://ddragon.leagueoflegends.com/cdn/img/' + tree.icon" /> </el-tooltip></div>
+                                        </el-col>
+                                    </el-row>
+                                    <el-row type="flex" justify="center" v-for="slot in tree.slots" v-if="slot.show==true">
+                                        <el-col v-for="rune in slot.runes" :span="4">
+                                            <div><el-tooltip open-delay="1000"><div slot="content" v-html="rune.shortDesc"></div><img :class="rune.highlight" :src="'https://ddragon.leagueoflegends.com/cdn/img/' + rune.icon" /></el-tooltip></div>
+                                        </el-col>
+                                    </el-row>
+                                </el-col>
+                            </el-row>
+                          </el-tab-pane>
+                        </el-tabs>
+
+                       
+                    </el-row>
+                </el-col>
+            </el-row>
+        </el-main>
+    </el-container>
+</body>
+<style>
+html,
+body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+#app {
+    height: 100%;
+    background-color: #f0fabd;
+}
+
+#app .el-header {
+    background-color: #a4aa83;
+    height: 90px !important;
+}
+
+#app .el-header .el-row {
+    height: 100%;
+}
+
+#app .el-header .el-row .el-col {
+    height: 100%;
+}
+
+.champion-icon {
+    border-radius: 50%;
+    height: auto;
+    width: 80%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    filter: grayscale(100%);
+}
+
+.champion-icon:hover {
+    filter: grayscale(50%);
+}
+
+.champion-icon-selected {
+    filter: grayscale(0%);
+    border-radius: 0%;
+}
+
+.vs-icon {
+    width: 30%;
+    height: auto;
+    margin: auto;
+    display: block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.el-main {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+}
+
+.el-main .el-row {
+    height: 100%;
+}
+
+.el-main .el-row .el-col {
+    height: 100%;
+}
+
+.rune-page {
+    height: 100px !important;
+}
+
+.rune {
+    width: 100%;
+    height: auto;
+}
+
+.rune-grayout {
+    filter: grayscale(100%);
+}
+.el-tabs__content {
+    padding: 2px !important;
+}
+</style>
+<script>
+app = new Vue({
+    el: '#app',
+    data: {
+        team1: ["Yasuo", "Sion", "Heimerdinger", "Morgana", "Maokai"],
+        team2: ["Ashe", "Amumu", "Lux", "Lulu", "Urgot"],
+        selected1: null,
+        selected2: null,
+        selected_position: null,
+        runeData: {},
+        runesReforged: null
+    },
+    methods: {
+        icon_class: function(champion, selected) {
+            if (champion == selected) return "champion-icon champion-icon-selected";
+            else return "champion-icon";
+        },
+        select1: function(champion, position) {
+            this.selected1 = champion;
+            
+            if(position == null){
+                this.selected_position = Object.keys(app.runeData[champion])[0];
+            }else this.selected_position = position; 
+
+            var runes = app.runeData[champion][this.selected_position];
+            for(var tree in app.runesReforged){
+                tree = app.runesReforged[tree];
+                if(runes.build.indexOf(tree.id) >= 0){
+                    tree.highlight = "rune";
+                    tree.secondary = false;
+                    for(var slot in tree.slots){
+                        slot = tree.slots[slot];
+                        slot.show = true;
+                        var flag = false;
+                        for(var rune in slot.runes){
+                            rune = slot.runes[rune];
+                            if(runes.build.indexOf(rune.id) >= 0){
+                                rune.highlight = "rune";
+                                flag = true;
+                            }else{
+                                rune.highlight = "rune rune-grayout";
+                            }
+                        }
+                        if(flag == false){
+                            tree.secondary = true;
+                            slot.show = true;
+                        }
+                    }
+                }else{
+                     tree.highlight = 'rune rune-grayout';
+                }
+            }
+            
+        },
+        select2: function(champion, position_id) {
+            selected2 = champion;
+        },
+        select_role: function(tab){
+            this.select1(this.selected1, tab.label);
+        }
+    }
+});
+
+$.getJSON('https://ddragon.leagueoflegends.com/cdn/8.17.1/data/en_US/runesReforged.json', function(json) {
+    app.runesReforged = json;
+    $.getJSON('https://ddragon.leagueoflegends.com/cdn/8.17.1/data/en_US/championFull.json', function(json) {
+        championFull = json;
+        $.getJSON('https://blitz.iesdev.com/api/lolstats/champions', function(json) {
+            $.each(json['data'], function(i, item) {
+                console.log(item.champion_id);
+                var championName = championFull['keys'][item.champion_id.toString()];
+                var role = item.role;
+                if (!(championName in app.runeData)) app.runeData[championName] = {};
+                var newPositionData = item.stats.most_common_runes;
+                app.runeData[championName][role] = newPositionData;
+                app.runeData[championName][role]['role'] = role;
+            });
+        });
+    });
+});
+</script>
+
+</html>

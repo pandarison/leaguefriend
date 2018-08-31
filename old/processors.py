@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
-# @Author: caspar
-# @Date:   2018-08-02 10:22:39
+# @Author: Pandarison
+# @Date:   2018-08-24 15:10:29
 # @Last Modified by:   Pandarison
-# @Last Modified time: 2018-08-23 16:15:23
+# @Last Modified time: 2018-08-25 21:58:37
 
 import urllib.parse
-import toga
-from toga.style.pack import *
-import time, threading
-import PyObjCTools.AppHelper
-import subprocess
+import os
+
 
 REGION_CODE = {
     "BR":"br1",
@@ -26,7 +23,13 @@ REGION_CODE = {
     "PBE":"pbe1"
 }
 
-browser = None
+def processor_LeagueFriend(data, region):
+    url = "file://" + os.path.realpath('./resources/runes/index.html')
+    script = ''
+    site = 'Runes'
+    return url, script, site
+
+
 
 def processor_ProfessorGG(summoners, region):
     url = 'https://porofessor.gg/pregame/{}/'.format(region.lower())
@@ -106,120 +109,3 @@ def processor_BlitzPostGame(data, region):
 })();"""
     site = "Blitz.GG"
     return url, script, site
-
-
-class BrowserWebview(toga.WebView):
-
-    def __init__(self, *args, **kwargs):
-        super(BrowserWebview, self).__init__(*args, **kwargs)
-        self.on_webview_load = self.runScript
-        
-
-    def setData(self, url, script):
-        self.url = url
-        self.script = script
-
-    def runScript(self, e):
-        PyObjCTools.AppHelper.callLater(0.1, self.evaluate, self.script)
-        PyObjCTools.AppHelper.callLater(1.5, self.evaluate, self.script)
-        PyObjCTools.AppHelper.callLater(3, self.evaluate, self.script)
-
-
-
-class Browser(toga.App):
-
-    def setSummoners(self, summoners):
-        self.summoners = summoners
-
-    def change_option(self, *args, **kwargs):
-        args[0].refresh()
-        self.view = kwargs['option'].children[0]
-        #self.view = kwargs[0]
-
-    def setClipboardData(self, e):
-        process = subprocess.Popen('pbcopy', env={'LANG': 'en_US.UTF-8'}, stdin=subprocess.PIPE)
-        process.communicate(self.view.url.encode())
-
-    def startup(self):
-        self.main_window = toga.MainWindow(title=self.name, size=(1280,800))
-
-        container = toga.OptionContainer(on_select=self.change_option, style=Pack(flex=1))
-
-
-        copy_url = toga.Command(
-            self.setClipboardData,
-            label="Copy URL",
-            tooltip='Copy the current URL'
-        )
-
-        self.commands.add(copy_url)
-        self.view = None
-        
-        if self.summoners['option'] == 'pregame':
-            for func in [processor_ProfessorGG,processor_OPGG]:
-                url, script, site = func(self.summoners['data'], self.summoners['region'])
-                webview = BrowserWebview(style=Pack(flex=1))
-                webview.setData(url, script)
-                container.add(site, toga.Box(children=[webview], style=Pack(flex=1)))
-                if not self.view:
-                    self.view = webview
-
-        if self.summoners['option'] == 'postgame':
-            for func in [processor_BlitzPostGame]:
-                url, script, site = func(self.summoners['data'], self.summoners['region'])
-                webview = BrowserWebview(style=Pack(flex=1))
-                webview.setData(url, script)
-                #webview.url = url
-                container.add(site, toga.Box(children=[webview], style=Pack(padding="5")))
-                if not self.view:
-                    self.view = webview
-
-
-        box = toga.Box(
-            children=[
-                container
-            ],
-            style=Pack(
-                direction=COLUMN,
-                padding="10",
-                flex=1
-            )
-        )
-
-        self.main_window.content = box
-
-        # Show the main window
-        self.main_window.show()
-
-
-
-
-
-
-
-
-def open_browser(summoner_str):
-    print(summoner_str)
-    browser = Browser('League Friend', 'org.leaguefriend', icon="resources/app.icns")
-    browser.setSummoners(eval(summoner_str))
-    browser.main_loop()
-
-if __name__ == '__main__':
-    import sys
-    arecco = {
-        "internal_name":"arecco",
-        "display_name":"arecco",
-        "assigned_role":"top"
-    }
-    sonamilol = {
-        "internal_name":"sonamilol",
-        "display_name":"Sonami LOL",
-        "assigned_role":"support"
-    }
-
-    summoner_str = str({'option':'pregame', 'region':'EUW', 'data':[arecco, sonamilol]})
-    #summoner_str = str({'option':'postgame', 'data':{'gameID':'3728820308', 'playerName':'arecco'}})
-
-    if len(sys.argv) > 1:
-        summoner_str = sys.argv[1]
-    open_browser(summoner_str)
