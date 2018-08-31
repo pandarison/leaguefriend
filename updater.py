@@ -2,7 +2,7 @@
 # @Author: Pandarison
 # @Date:   2018-08-31 14:18:46
 # @Last Modified by:   Pandarison
-# @Last Modified time: 2018-08-31 16:56:19
+# @Last Modified time: 2018-08-31 17:16:27
 
 from Foundation import NSBundle
 import requests
@@ -44,7 +44,7 @@ def getBundlePath():
     return NSBundle.mainBundle().bundlePath()
 
 def getLatestRelease():
-    r = requests.get("https://api.github.com/repos/pandarison/leaguefriend/releases/latest").json()
+    r = requests.get("https://api.github.com/repos/pandarison/leaguefriend/releases/latest", verify=False).json()
     latest_version = float(r['tag_name'])
     latest_version_url = r['assets'][0]['browser_download_url']
     latest_file_size = r['assets'][0]['size']

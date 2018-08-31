@@ -2,7 +2,7 @@
 # @Author: Pandarison
 # @Date:   2018-08-29 11:54:53
 # @Last Modified by:   Pandarison
-# @Last Modified time: 2018-08-30 22:39:58
+# @Last Modified time: 2018-08-31 21:34:12
 
 import toga
 import urllib.parse
@@ -32,7 +32,6 @@ class ProfessorGG(toga.WebView):
         self.site = "Professor.GG"
         self.client_data.add_listener_on_myTeamPlayers_change(self.updateURL)
         self.client_data.add_listener_on_player_change(self.defaultURL)
-        self.default_page = True
         self.script = ""
         self.on_webview_load = self.runScript
 
@@ -42,27 +41,25 @@ class ProfessorGG(toga.WebView):
         PyObjCTools.AppHelper.callLater(3, self.evaluate, self.script)
 
     def defaultURL(self):
-        if self.default_page:
-            self.default_page = False
-            self.url = 'https://www.leagueofgraphs.com/summoner/{}/{}'.format(self.client_data.region.lower(), self.client_data.player['internal_name'].value)
-            self.script = """$("#topnavbar").remove();
-                            $("#ifrmDiv").remove();
-                            $("#cdm-zone-01").remove();
-                            $("#cdm-zone-03").remove();
-                            $("#cdm-zone-06").remove();
-                            $(".app_gdpr--2k2uB").remove(); 
-                            $("#footer").remove();
-                            $("#sidebar-container").remove();
-                            $("#filters-menu").remove();
-                            $("#override_POROFESSORINFOBANNER0").remove();
-                            $("body").css("background", "none");
-                            $("body").css("background-color", "#E3E3E3");
-                            $('#pageContent').each(function () {
-                                this.style.setProperty( 'width', '100%', 'important' );
-                                this.style.setProperty( 'margin-top', '5px', 'important' );
-                            });
-                            if($("#matchTable").length != 0 && $("#leaguefriend").length == 0) {$("#mainContentContainer").prepend("<button id='leaguefriend' type='button' class='see_more_ajax_button' style='margin-bottom:10px'><a href='javascript:history.back()' style='color:white'>Go Back</a></button>");}
-                            """
+        self.url = 'https://www.leagueofgraphs.com/summoner/{}/{}'.format(self.client_data.region.lower(), self.client_data.player['internal_name'].value)
+        self.script = """$("#topnavbar").remove();
+                        $("#ifrmDiv").remove();
+                        $("#cdm-zone-01").remove();
+                        $("#cdm-zone-03").remove();
+                        $("#cdm-zone-06").remove();
+                        $(".app_gdpr--2k2uB").remove(); 
+                        $("#footer").remove();
+                        $("#sidebar-container").remove();
+                        $("#filters-menu").remove();
+                        $("#override_POROFESSORINFOBANNER0").remove();
+                        $("body").css("background", "none");
+                        $("body").css("background-color", "#E3E3E3");
+                        $('#pageContent').each(function () {
+                            this.style.setProperty( 'width', '100%', 'important' );
+                            this.style.setProperty( 'margin-top', '5px', 'important' );
+                        });
+                        if($("#matchTable").length != 0 && $("#leaguefriend").length == 0) {$("#mainContentContainer").prepend("<button id='leaguefriend' type='button' class='see_more_ajax_button' style='margin-bottom:10px'><a href='javascript:history.back()' style='color:white'>Go Back</a></button>");}
+                        """
 
     def updateURL(self):
         url = 'https://porofessor.gg/pregame/{}/'.format(self.client_data.region.lower())
@@ -81,7 +78,7 @@ class BlitzGG(toga.WebView):
     def __init__(self, client_data, *args, **kwargs):
         super(BlitzGG, self).__init__(*args, **kwargs)
         self.client_data = client_data
-        self.site = "Previous Game [Blitz.GG]"
+        self.site = "Post Game [Blitz.GG]"
         self.client_data.add_listener_on_previous_game_change(self.updateURL)
         self.script = ""
         self.on_webview_load = self.runScript
@@ -90,6 +87,7 @@ class BlitzGG(toga.WebView):
         PyObjCTools.AppHelper.callLater(0.1, self.evaluate, self.script)
         PyObjCTools.AppHelper.callLater(1.5, self.evaluate, self.script)
         PyObjCTools.AppHelper.callLater(3, self.evaluate, self.script)
+        PyObjCTools.AppHelper.callLater(10, self.evaluate, self.script)
 
     def updateURL(self):
         url = 'https://app.blitz.gg/lol/match/{}/{}/{}'.format(REGION_CODE[self.client_data.region], urllib.parse.quote(self.client_data.player['internal_name'].value), str(self.client_data.previous_game_id))

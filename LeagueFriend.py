@@ -2,7 +2,7 @@
 # @Author: Pandarison
 # @Date:   2018-08-27 20:24:10
 # @Last Modified by:   Pandarison
-# @Last Modified time: 2018-08-31 17:05:36
+# @Last Modified time: 2018-08-31 22:40:57
 
 from AppKit import NSStatusBar, NSVariableStatusItemLength, NSLog, NSImage, NSMenu, NSMenuItem
 import PyObjCTools.AppHelper
@@ -24,7 +24,7 @@ from monitor import LeagueMonitor
 from views import *
 import updater
 
-__VERSION__ = 1.2
+__VERSION__ = 1.3
 
 
 
@@ -50,6 +50,10 @@ class MyAppDelegate(AppDelegate):
         self.interface.on_quit()
 
     @objc_method
+    def about_(self):
+        self.interface.on_about()
+
+    @objc_method
     def applicationDidFinishLaunching_(self, notification):
         self.native.activateIgnoringOtherApps(True)
         self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength_(NSVariableStatusItemLength)
@@ -64,8 +68,11 @@ class MyAppDelegate(AppDelegate):
 
         item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("Check For Updates", "update:", "")
         self.menu.addItem_(item)
+        item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("About", "about:", "")
+        self.menu.addItem_(item)
         item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("Quit", "quit:", "")
         self.menu.addItem_(item)
+
         self.statusItem.setMenu_(self.menu)
 
 
@@ -92,6 +99,17 @@ class Browser(toga.App):
             args[0].refresh()
         except Exception as e:
             pass
+
+    def on_about(self):
+        self.about_window = toga.Window(title="About", size=(200,100))
+        
+        text = "League Friend\n\nVersion: {}".format(__VERSION__)
+        textbox = toga.Label(text=text, style=Pack(flex=1, padding_left="30"))
+        self.about_window.content = toga.Box(children=[
+                textbox
+            ], style=Pack(direction=COLUMN, flex=1, padding="10"))
+
+        self.about_window.show()
     
     def on_update(self):
         global __VERSION__
@@ -214,11 +232,8 @@ class Browser(toga.App):
 
         
 if __name__ == '__main__':
-    if os.path.exists("resources/patches/LeagueFriend.app"):
-        os.system("open resources/patches/LeagueFriend.app")
-    else:
-        browser = Browser('League Friend', 'org.leaguefriend', icon="resources/app.icns")
-        #print(dir(browser.main_loop))
-        browser.launch_app()
+    browser = Browser('League Friend', 'org.leaguefriend', icon="resources/app.icns")
+    #print(dir(browser.main_loop))
+    browser.launch_app()
 
 
