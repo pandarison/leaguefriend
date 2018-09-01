@@ -13,9 +13,6 @@ League Friend
 **Download Link:**  
 [Click here to download](https://github.com/pandarison/leaguefriend/releases/download/1.4/LeagueFriend.zip)
 
-**How to use:**  
-Open the app and turn on Automatic Mode.
-
 **[Submit Bug or Suggestions](https://gitreports.com/issue/pandarison/leaguefriend)**
 
 
