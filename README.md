@@ -21,6 +21,10 @@ Open the app and turn on Automatic Mode.
 
 **FAQ**
 
+**Q.** The app does not work?  
+**A.** League Friend assumes that your LOL client is at `/Applications/League of Legends.app`. If you install LOL client somewhere else, League Friend won't work.
+
+
 **Q.** "Unidentified developer"?  
 **A.** If you run the app for the first time, you need to right click and select open.
 

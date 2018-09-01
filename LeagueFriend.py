@@ -2,7 +2,7 @@
 # @Author: Pandarison
 # @Date:   2018-08-27 20:24:10
 # @Last Modified by:   Pandarison
-# @Last Modified time: 2018-08-31 22:40:57
+# @Last Modified time: 2018-09-01 11:15:49
 
 from AppKit import NSStatusBar, NSVariableStatusItemLength, NSLog, NSImage, NSMenu, NSMenuItem
 import PyObjCTools.AppHelper
@@ -124,15 +124,18 @@ class Browser(toga.App):
 
         progress_bar = toga.ProgressBar(max=latest['size'], value=0)
 
+        btn_update_now = None
+
         def on_btn_click_later(e):
             self.update_window._impl.close()
 
         def on_btn_click_now(e):
+            btn_update_now.enabled = False
             def addBarValue(v):
                 progress_bar.value += v
             def thread_update_task():
                 bundlePath = updater.getBundlePath()
-                response = requests.get(latest['url'], stream=True)
+                response = requests.get(latest['url'], verify=False, stream=True)
                 progress_value = 0
                 tempFolder = tempfile.TemporaryDirectory()
                 with open(tempFolder.name + "/patch.zip", "wb") as f:
@@ -147,7 +150,7 @@ class Browser(toga.App):
                 shutil.rmtree(bundlePath)
                 shutil.copytree(tempFolder.name + "/patches/LeagueFriend.app", bundlePath)
                 tempFolder.cleanup()
-                os.system("open -n " + bundlePath)
+                os.system('open -n "{}"'.format(bundlePath))
                 self.exit()
             t = threading.Thread(target=thread_update_task)
             t.start()
