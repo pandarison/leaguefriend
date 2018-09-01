@@ -2,7 +2,7 @@
 # @Author: Pandarison
 # @Date:   2018-08-27 20:24:10
 # @Last Modified by:   Pandarison
-# @Last Modified time: 2018-09-01 11:15:49
+# @Last Modified time: 2018-09-01 13:48:04
 
 from AppKit import NSStatusBar, NSVariableStatusItemLength, NSLog, NSImage, NSMenu, NSMenuItem
 import PyObjCTools.AppHelper
@@ -24,7 +24,7 @@ from monitor import LeagueMonitor
 from views import *
 import updater
 
-__VERSION__ = 1.3
+__VERSION__ = 1.4
 
 
 
@@ -54,6 +54,10 @@ class MyAppDelegate(AppDelegate):
         self.interface.on_about()
 
     @objc_method
+    def website_(self):
+        os.system("open https://github.com/pandarison/leaguefriend")
+
+    @objc_method
     def applicationDidFinishLaunching_(self, notification):
         self.native.activateIgnoringOtherApps(True)
         self.statusItem = NSStatusBar.systemStatusBar().statusItemWithLength_(NSVariableStatusItemLength)
@@ -67,6 +71,8 @@ class MyAppDelegate(AppDelegate):
         self.menu = NSMenu.alloc().init()
 
         item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("Check For Updates", "update:", "")
+        self.menu.addItem_(item)
+        item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("Open Website", "website:", "")
         self.menu.addItem_(item)
         item = NSMenuItem.alloc().initWithTitle_action_keyEquivalent_("About", "about:", "")
         self.menu.addItem_(item)
@@ -190,6 +196,9 @@ class Browser(toga.App):
         # views
         self.webview_professorgg = ProfessorGG(self.client_data, style=Pack(flex=1))
         container.add(self.webview_professorgg.site, toga.Box(children=[self.webview_professorgg], style=Pack(flex=1)))
+
+        self.webview_professorgglivegame = ProfessorGGLiveGame(self.client_data, style=Pack(flex=1))
+        container.add(self.webview_professorgglivegame.site, toga.Box(children=[self.webview_professorgglivegame], style=Pack(flex=1)))
 
         self.webview_leaguefriendrunepage = LeagueFriendRunePage(self.client_data, style=Pack(flex=1))
         container.add(self.webview_leaguefriendrunepage.site, toga.Box(children=[self.webview_leaguefriendrunepage], style=Pack(flex=1)))

@@ -2,7 +2,7 @@
 # @Author: Pandarison
 # @Date:   2018-08-29 11:54:53
 # @Last Modified by:   Pandarison
-# @Last Modified time: 2018-08-31 21:34:12
+# @Last Modified time: 2018-09-01 13:47:14
 
 import toga
 import urllib.parse
@@ -30,7 +30,6 @@ class ProfessorGG(toga.WebView):
         super(ProfessorGG, self).__init__(*args, **kwargs)
         self.client_data = client_data
         self.site = "Professor.GG"
-        self.client_data.add_listener_on_myTeamPlayers_change(self.updateURL)
         self.client_data.add_listener_on_player_change(self.defaultURL)
         self.script = ""
         self.on_webview_load = self.runScript
@@ -60,6 +59,21 @@ class ProfessorGG(toga.WebView):
                         });
                         if($("#matchTable").length != 0 && $("#leaguefriend").length == 0) {$("#mainContentContainer").prepend("<button id='leaguefriend' type='button' class='see_more_ajax_button' style='margin-bottom:10px'><a href='javascript:history.back()' style='color:white'>Go Back</a></button>");}
                         """
+
+
+class ProfessorGGLiveGame(toga.WebView):
+    def __init__(self, client_data, *args, **kwargs):
+        super(ProfessorGGLiveGame, self).__init__(*args, **kwargs)
+        self.client_data = client_data
+        self.site = "Live Game"
+        self.client_data.add_listener_on_myTeamPlayers_change(self.updateURL)
+        self.script = ""
+        self.on_webview_load = self.runScript
+
+    def runScript(self, e):
+        PyObjCTools.AppHelper.callLater(0.1, self.evaluate, self.script)
+        PyObjCTools.AppHelper.callLater(1.5, self.evaluate, self.script)
+        PyObjCTools.AppHelper.callLater(3, self.evaluate, self.script)
 
     def updateURL(self):
         url = 'https://porofessor.gg/pregame/{}/'.format(self.client_data.region.lower())
